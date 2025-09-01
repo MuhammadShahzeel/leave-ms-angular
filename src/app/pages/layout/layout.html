@@ -1,0 +1,46 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <nav class="col-md-3 col-lg-2 d-md-block bg-primary sidebar collapse vh-100">
+      <div class="position-sticky pt-3 text-white">
+        <h4 class="px-3">ELMS Admin</h4>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link text-white" routerLink="/dashboard" >Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" routerLink="/employee" >Employees</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" routerLink="/leave" >Leave Management</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" data-bs-toggle="collapse" href="#reportsMenu" role="button" aria-expanded="false" aria-controls="reportsMenu">
+              Reports
+            </a>
+          
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" data-bs-toggle="collapse" href="#settingsMenu" role="button" aria-expanded="false" aria-controls="settingsMenu">
+              Settings
+            </a>
+            <div class="collapse" id="settingsMenu">
+              <ul class="btn-toggle-nav list-unstyled fw-normal small ps-4">
+                <li><a  class="nav-link text-white">Profile</a></li>
+                <li><a  class="nav-link text-white">Preferences</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+        <div class="mt-auto px-3">
+          <button (click)="onLogout()" class="btn btn-light w-100 mt-3">Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
