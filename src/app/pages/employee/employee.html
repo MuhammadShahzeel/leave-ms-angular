@@ -14,59 +14,33 @@
       <table class="table table-striped table-hover mb-0">
         <thead class="table-dark">
           <tr>
-            <th>ID</th>
+            <th>#</th>
             <th>Name</th>
             <th>Email</th>
             <th>Contact</th>
             <th>Department</th>
-            <th>Gender</th>
-            <th>Role</th>
             <th>Actions</th>
+
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>John Doe</td>
-            <td>john.doe@company.com</td>
-            <td>+1-555-0123</td>
-            <td>IT</td>
-            <td>Male</td>
-            <td>Developer</td>
-            <td>
-              <button class="btn btn-sm btn-warning me-1">Edit</button>
-              <button class="btn btn-sm btn-info me-1 text-white">View</button>
-              <button class="btn btn-sm btn-danger">Delete</button>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jane Smith</td>
-            <td>jane.smith@company.com</td>
-            <td>+1-555-0124</td>
-            <td>HR</td>
-            <td>Female</td>
-            <td>Manager</td>
-            <td>
-              <button class="btn btn-sm btn-warning me-1">Edit</button>
-              <button class="btn btn-sm btn-info me-1 text-white">View</button>
-              <button class="btn btn-sm btn-danger">Delete</button>
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Mike Johnson</td>
-            <td>mike.johnson@company.com</td>
-            <td>+1-555-0125</td>
-            <td>Finance</td>
-            <td>Male</td>
-            <td>Accountant</td>
-            <td>
-              <button class="btn btn-sm btn-warning me-1">Edit</button>
-              <button class="btn btn-sm btn-info me-1 text-white">View</button>
-              <button class="btn btn-sm btn-danger">Delete</button>
-            </td>
-          </tr>
+          @for (emp of employeeList; track $index;) {
+            <tr>
+              <!-- ✅ show row number instead of employeeId -->
+              <td>{{ $index + 1 }}</td>
+              <td>{{ emp.employeeName }}</td>
+              <td>{{ emp.emailId }}</td>
+              <td>{{ emp.contactNo }}</td>
+              <td>{{ emp.deptName }}</td>
+              
+              
+              <td>
+                <button class="btn btn-sm btn-warning me-1">Edit</button>
+                <button class="btn btn-sm btn-info me-1 text-white">View</button>
+                <button class="btn btn-sm btn-danger">Delete</button>
+              </td>
+            </tr>
+          } 
         </tbody>
       </table>
     </div>
