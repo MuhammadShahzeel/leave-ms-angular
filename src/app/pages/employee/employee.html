@@ -2,7 +2,7 @@
   <!-- Header -->
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Employee Management</h3>
-    <button class="btn btn-primary">Add Employee</button>
+    <button (click)="openModal()" class="btn btn-primary">Add Employee</button>
   </div>
 
   <!-- Card -->
@@ -43,6 +43,53 @@
           } 
         </tbody>
       </table>
+    </div>
+  </div>
+</div>
+
+<!-- //modal -->
+
+<!-- #newModal is refrence variable we use it to access modal in ts file -->
+<div class="modal" #newModal tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="employeeModalLabel">Employee Details</h5>
+        <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="employeeName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="employeeName" required>
+          </div>
+          <div class="mb-3">
+            <label for="emailId" class="form-label">Email</label>
+            <input type="email" class="form-control" id="emailId" required>
+          </div>
+          <div class="mb-3">
+            <label for="contactNo" class="form-label">Contact</label>
+            <input type="text" class="form-control" id="contactNo" required>
+          </div>
+
+          <!-- ✅ Department as Dropdown -->
+          <div class="mb-3">
+            <label for="deptName" class="form-label">Department</label>
+            <select id="deptName" class="form-select" required>
+              <option value="" disabled selected>Select Department</option>
+       @for (item of deptList$|async; track $index) {
+            <option [value]="item.deptId">{{item.deptName}}</option>
+
+            }
+            
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+        <button type="button" class="btn btn-primary">Add employee</button>
+      </div>
     </div>
   </div>
 </div>
