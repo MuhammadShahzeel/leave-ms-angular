@@ -1,20 +1,24 @@
 import { Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
 import { EmployeeService } from '../../services/employee';
-import { APIResponseModel, EmployeeList } from '../../models/employee.model';
+import { APIResponseModel, EmployeeList, EmployeeModel } from '../../models/employee.model';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-employee',
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, FormsModule],
   templateUrl: './employee.html',
   styleUrl: './employee.css'
 })
 export class Employee implements OnInit {
 
+
   employeeService = inject(EmployeeService);
   employeeList: EmployeeList[] = [];
   deptList$:Observable<any[]> = new Observable<any[]>;
+  roleList$:Observable<any[]> = new Observable<any[]>;
+   employeeObj: EmployeeModel = new EmployeeModel();
 
 // view child is like document.getElementById we access modal using #newModal
   @ViewChild('newModal') newModal!: ElementRef;
@@ -22,6 +26,7 @@ export class Employee implements OnInit {
   ngOnInit(): void {
     this.getEmployees();
     this.deptList$ = this.employeeService.getDept();
+    this.roleList$ = this.employeeService.getRoles();
   }
 
   getEmployees() {
@@ -48,4 +53,26 @@ export class Employee implements OnInit {
 
 
 }
-}
+
+addEmployee() {
+  this.employeeService.onAddEmployee(this.employeeObj).subscribe({
+    next: (res:any) => {
+      if(res.result) {
+        console.log(res);
+        
+
+        this.getEmployees(); // Refresh the employee list
+         this.closeModal();
+        alert('Employee added successfully');
+      } else {
+        alert(res.message);
+      }
+     
+    
+     
+    },
+    error: (error) => {
+      // Handle error response
+    }
+  });
+}}

@@ -33,6 +33,17 @@ export class EmployeeService {
 
   }
 
+  // to gget eroles
+  getRoles():Observable<any[]> {
+    return this.http.get<APIResponseModel>("https://freeapi.miniprojectideas.com/api/EmployeeLeave/GetAllRoles").pipe(
+      map((res: any) => res.data)
+    );
+
+
+
+
+  }
+
 
 //   In Angular, when you call an API using HttpClient, it returns an Observable.
 // pipe() lets you use RxJS operators like map, filter, catchError to transform the stream before subscribing.
@@ -42,4 +53,9 @@ export class EmployeeService {
 // it’s RxJS pipe.
 // Its purpose is to transform or filter the observable’s values.
 // You’re correct: if API returns { status, message, data } but you only need data, use RxJS pipe with map.
+
+
+ onAddEmployee(obj: any) {
+    return this.http.post("https://freeapi.miniprojectideas.com/api/EmployeeLeave/CreateEmployee", obj);
+  }
 }

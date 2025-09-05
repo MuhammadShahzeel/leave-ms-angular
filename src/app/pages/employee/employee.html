@@ -61,24 +61,49 @@
         <form>
           <div class="mb-3">
             <label for="employeeName" class="form-label">Name</label>
-            <input type="text" class="form-control" id="employeeName" required>
+            <input name="employeeName" [(ngModel)]="employeeObj.employeeName" type="text" class="form-control" id="employeeName" required>
           </div>
           <div class="mb-3">
             <label for="emailId" class="form-label">Email</label>
-            <input type="email" class="form-control" id="emailId" required>
+            <input name="emailId" [(ngModel)]="employeeObj.emailId" type="email" class="form-control" id="emailId" required>
           </div>
           <div class="mb-3">
             <label for="contactNo" class="form-label">Contact</label>
-            <input type="text" class="form-control" id="contactNo" required>
+            <input name="contactNo" [(ngModel)]="employeeObj.contactNo" type="text" class="form-control" id="contactNo" required>
           </div>
-
+          <!-- gender -->
+          <div class="mb-3">
+            <label for="gender" class="form-label">Gender</label>
+            <select name="gender" [(ngModel)]="employeeObj.gender" id="gender" class="form-select" required>
+              <option value="" disabled selected>Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+<!-- password -->
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input name="password" [(ngModel)]="employeeObj.password" type="password" class="form-control" id="password" required>
+          </div>
           <!-- ✅ Department as Dropdown -->
           <div class="mb-3">
             <label for="deptName" class="form-label">Department</label>
-            <select id="deptName" class="form-select" required>
+            <select name="deptId" [(ngModel)]="employeeObj.deptId" id="deptName" class="form-select" required>
               <option value="" disabled selected>Select Department</option>
        @for (item of deptList$|async; track $index) {
             <option [value]="item.deptId">{{item.deptName}}</option>
+
+            }
+            
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="roleName" class="form-label">Role</label>
+            <select name="role" [(ngModel)]="employeeObj.role" id="roleName" class="form-select" required>
+              <option value="" disabled selected>Select Role</option>
+       @for (item of roleList$|async; track $index) {
+            <option >{{item}}</option>
 
             }
             
@@ -88,7 +113,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
-        <button type="button" class="btn btn-primary">Add employee</button>
+        <button (click)="addEmployee()" type="button" class="btn btn-primary">Add employee</button>
       </div>
     </div>
   </div>
