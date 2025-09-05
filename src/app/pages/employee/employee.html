@@ -36,8 +36,9 @@
               
               <td>
                 <button class="btn btn-sm btn-warning me-1">Edit</button>
-                <button class="btn btn-sm btn-info me-1 text-white">View</button>
-                <button class="btn btn-sm btn-danger">Delete</button>
+             
+
+                <button (click)="deleteEmployee(emp.employeeId)" class="btn btn-sm btn-danger">Delete</button>
               </td>
             </tr>
           } 

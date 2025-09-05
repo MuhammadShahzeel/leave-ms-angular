@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 export class Employee implements OnInit {
 
 
+
   employeeService = inject(EmployeeService);
   employeeList: EmployeeList[] = [];
   deptList$:Observable<any[]> = new Observable<any[]>;
@@ -72,7 +73,32 @@ addEmployee() {
      
     },
     error: (error) => {
+      alert('An error occurred while adding the employee.');
+    
+    }
+  });
+
+
+
+
+}
+deleteEmployee(id: number) {
+  this.employeeService.onDeleteEmployee(id).subscribe({
+    next: (res: any) => {
+      if (res.result) {
+        this.getEmployees(); // Refresh the employee list
+        alert('Employee deleted successfully');
+      } else {
+        alert(res.message);
+      }
+    },
+    error: (error) => {
+     alert('An error occurred while deleting the employee.');
       // Handle error response
     }
   });
-}}
+}
+
+
+
+}

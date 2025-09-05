@@ -58,4 +58,8 @@ export class EmployeeService {
  onAddEmployee(obj: any) {
     return this.http.post("https://freeapi.miniprojectideas.com/api/EmployeeLeave/CreateEmployee", obj);
   }
+
+  onDeleteEmployee(id: number) {
+    return this.http.delete(`https://freeapi.miniprojectideas.com/api/EmployeeLeave/DeleteEmployee?id=${id}`);
+  }
 }
