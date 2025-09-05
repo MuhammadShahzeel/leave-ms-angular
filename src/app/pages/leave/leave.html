@@ -1,1 +1,120 @@
-<p>leave works!</p>
+<div class="container mt-4">
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Leave Management</h3>
+    <button (click)="openModal()" class="btn btn-primary">Add Leave Request</button>
+  </div>
+
+  <!-- Tabs -->
+  <ul class="nav nav-tabs mb-3">
+    <li class="nav-item">
+      <a class="nav-link active" href="#">All Leaves</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Pending Approval</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Approved</a>
+    </li>
+  </ul>
+
+  <!-- Card -->
+  <div class="card shadow-sm">
+    <div class="card-header fw-bold text-primary">
+      All Leave Requests
+    </div>
+    <div class="card-body p-0">
+      <table class="table table-striped table-hover mb-0">
+        <thead class="table-dark">
+          <tr>
+            <th>LEAVE ID</th>
+            <th>EMPLOYEE</th>
+            <th>LEAVE TYPE</th>
+            <th>FROM DATE</th>
+            <th>TO DATE</th>
+            <th>DAYS</th>
+            <th>STATUS</th>
+            <th>ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (leave of leaveList; track $index) {
+            <tr >
+              <td>{{ leave.leaveId }}</td>
+              <td>{{ leave.employeeName }}</td>
+              <td>{{ leave.leaveType }}</td>
+              <td>{{ leave.fromDate | date:'yyyy-MM-dd' }}</td>
+              <td>{{ leave.toDate | date:'yyyy-MM-dd' }}</td>
+                <td>{{ leave.noOfDays }}</td>
+                <td>
+                @if (leave.isApproved === null) {
+                  <span class="badge bg-warning text-dark">Pending</span>
+                }
+                @if (leave.isApproved === true) {
+                  <span class="badge bg-success text-light">Approved</span>
+                }
+                @if (leave.isApproved === false) {
+                  <span class="badge bg-danger text-light">Rejected</span>
+                }
+                </td>
+              <td>
+                <button class="btn btn-sm btn-info me-1"></button>
+                <button class="btn btn-sm btn-warning me-1"></button>
+                <button class="btn btn-sm btn-danger"></button>
+              </td>
+            </tr>
+
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal" #leaveModal tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Leave Request</h5>
+        <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="leaveForm">
+          <div class="mb-3">
+            <label for="fromDate" class="form-label">From Date</label>
+            <input type="date" class="form-control" id="fromDate" formControlName="fromDate" />
+          </div>
+          <div class="mb-3">
+            <label for="toDate" class="form-label">To Date</label>
+            <input type="date" class="form-control" id="toDate" formControlName="toDate" />
+          </div>
+          <div class="mb-3">
+            <label for="noofDays" class="form-label">No. of Days</label>
+            <input type="number" class="form-control" id="noofDays" formControlName="noofDays" />
+          </div>
+          <div class="mb-3">
+            <label for="leaveType" class="form-label">Leave Type</label>
+            <select class="form-select" id="leaveType" formControlName="leaveType">
+              <option value="" disabled>Select Type</option>
+              <option value="Sick Leave">Sick Leave</option>
+              <option value="Casual Leave">Casual Leave</option>
+              <option value="Earned Leave">Earned Leave</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="details" class="form-label">Details</label>
+            <textarea class="form-control" id="details" formControlName="details" rows="3"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="submitLeave()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
