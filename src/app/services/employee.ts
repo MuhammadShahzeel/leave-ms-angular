@@ -70,4 +70,24 @@ export class EmployeeService {
   getAllLeavesByEmpId(empId: number): Observable<APIResponseModel> {
     return this.http.get<APIResponseModel>(`https://freeapi.miniprojectideas.com/api/EmployeeLeave/GetAllLeavesByEmployeeId?id=${empId}`);
   }
+
+  getLeavesForApprovalBySuperwiserId(empId:number):Observable<APIResponseModel>{
+    return this.http.get<APIResponseModel>("https://freeapi.miniprojectideas.com/api/EmployeeLeave/GetLeavesForApprovalBySuperwiserId?id="+empId
+      
+    )
+  }
+   getAllLeaves():Observable<APIResponseModel>{
+    return this.http.get<APIResponseModel>("https://freeapi.miniprojectideas.com/api/EmployeeLeave/GetAllLeaves")
+  }
+
+  getApproveLeaves(leaveId:number):Observable<APIResponseModel>{
+    return this.http.get<APIResponseModel>("https://freeapi.miniprojectideas.com/api/EmployeeLeave/ApproveLeave?id="+leaveId)
+  }
+
+getRejectLeaves(leaveId:number):Observable<APIResponseModel>{
+    return this.http.get<APIResponseModel>("https://freeapi.miniprojectideas.com/api/EmployeeLeave/RejectLeave?id="+leaveId)
+  }
+
+
 }
+

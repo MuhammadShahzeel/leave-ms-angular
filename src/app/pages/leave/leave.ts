@@ -1,7 +1,7 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup,ReactiveFormsModule } from '@angular/forms';
 import { EmployeeService } from '../../services/employee';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 
 
 
@@ -9,11 +9,12 @@ import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-leave',
-  imports: [ReactiveFormsModule,DatePipe],
+  imports: [ReactiveFormsModule,DatePipe,NgClass],
   templateUrl: './leave.html',
   styleUrl: './leave.css'
 })
 export class Leave implements OnInit {
+
 
   constructor() {
    const loggedData = localStorage.getItem('leaveUser');
@@ -25,10 +26,13 @@ export class Leave implements OnInit {
   }
   ngOnInit(): void {
     this.loadLeaves();
+    this.getAllLeaves();
   }
 
   employeeService = inject(EmployeeService);
   leaveList: any[] = [];
+    approvalleaveList: any[] = []
+  currentTabName: string = "myLeave"
 
   @ViewChild("leaveModal") leaveModal!: ElementRef;
 
@@ -69,16 +73,24 @@ export class Leave implements OnInit {
     });
   }
 
+ getAllLeaves() {
+    this.employeeService.getAllLeaves().subscribe({
+      next: (result: any) => {
+        this.approvalleaveList = result.data.filter((m: any) => m.isApproved == null)
+      }
+    })
+  }
+
+
   submitLeave() {
     const formData = this.leaveForm.value;
     this.employeeService.onAddLeave(formData).subscribe({
       next: (res:any) => {
         if(res.result){
           this.loadLeaves();
+          this.getAllLeaves();
          alert('Leave added successfully');
           this.closeModal();
-         
-
         }
         else{
           alert(res.message);
@@ -92,6 +104,27 @@ export class Leave implements OnInit {
       }
     });
   }
+
+  changeTab(tabName: string){
+    this.currentTabName = tabName
+  }
+  rejectLeave(id: number) {
+    this.employeeService.getRejectLeaves(id).subscribe({
+      next: () => {
+        this.getAllLeaves()
+        this.loadLeaves();
+      }
+    })
+
+}
+acceptLeave(id: number) {
+this.employeeService.getApproveLeaves(id).subscribe({
+      next: () => {
+        this.getAllLeaves()
+        this.loadLeaves();
+      }
+    })
+}
 
 }
 

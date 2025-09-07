@@ -6,69 +6,117 @@
   </div>
 
   <!-- Tabs -->
-  <ul class="nav nav-tabs mb-3">
-    <li class="nav-item">
-      <a class="nav-link active" href="#">All Leaves</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Pending Approval</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Approved</a>
-    </li>
-  </ul>
+<ul class="nav nav-tabs mb-3">
+  <li class="nav-item">
+    <button [ngClass]="currentTabName === 'myLeave'?'active':''" (click)="changeTab('myLeave')" class="nav-link" type="button">My Leaves</button>
+  </li>
+  <li class="nav-item">
+    <button [ngClass]="currentTabName === 'LeaveRequest'?'active':''" (click)="changeTab('LeaveRequest')" class="nav-link" type="button">Leave Requests</button>
+  </li>
+
+</ul>
+
 
   <!-- Card -->
+   @if(currentTabName === 'myLeave') {
   <div class="card shadow-sm">
-    <div class="card-header fw-bold text-primary">
-      All Leave Requests
-    </div>
-    <div class="card-body p-0">
-      <table class="table table-striped table-hover mb-0">
-        <thead class="table-dark">
-          <tr>
-            <th>LEAVE ID</th>
-            <th>EMPLOYEE</th>
-            <th>LEAVE TYPE</th>
-            <th>FROM DATE</th>
-            <th>TO DATE</th>
-            <th>DAYS</th>
-            <th>STATUS</th>
-            <th>ACTIONS</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (leave of leaveList; track $index) {
-            <tr >
-              <td>{{ leave.leaveId }}</td>
-              <td>{{ leave.employeeName }}</td>
-              <td>{{ leave.leaveType }}</td>
-              <td>{{ leave.fromDate | date:'yyyy-MM-dd' }}</td>
-              <td>{{ leave.toDate | date:'yyyy-MM-dd' }}</td>
-                <td>{{ leave.noOfDays }}</td>
-                <td>
-                @if (leave.isApproved === null) {
-                  <span class="badge bg-warning text-dark">Pending</span>
-                }
-                @if (leave.isApproved === true) {
-                  <span class="badge bg-success text-light">Approved</span>
-                }
-                @if (leave.isApproved === false) {
-                  <span class="badge bg-danger text-light">Rejected</span>
-                }
-                </td>
-              <td>
-                <button class="btn btn-sm btn-info me-1"></button>
-                <button class="btn btn-sm btn-warning me-1"></button>
-                <button class="btn btn-sm btn-danger"></button>
-              </td>
-            </tr>
-
-          }
-        </tbody>
-      </table>
-    </div>
+  <div class="card-header fw-bold text-primary">
+    My Leave Requests
   </div>
+  <div class="card-body p-0">
+    <table class="table table-striped table-hover mb-0">
+      <thead class="table-dark">
+        <tr>
+          <th>LEAVE ID</th>
+          <th>EMPLOYEE</th>
+          <th>LEAVE TYPE</th>
+          <th>FROM DATE</th>
+          <th>TO DATE</th>
+          <th>DAYS</th>
+          <th>STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (leave of leaveList; track $index) {
+          <tr>
+            <td>{{ leave.leaveId }}</td>
+            <td>{{ leave.employeeName }}</td>
+            <td>{{ leave.leaveType }}</td>
+            <td>{{ leave.fromDate | date:'yyyy-MM-dd' }}</td>
+            <td>{{ leave.toDate | date:'yyyy-MM-dd' }}</td>
+            <td>{{ leave.noOfDays }}</td>
+            <td class="text-center">
+              @if (leave.isApproved === null) {
+                <span class="badge bg-warning text-dark">Pending</span>
+              }
+              @if (leave.isApproved === true) {
+                <span class="badge bg-success text-light">Approved</span>
+              }
+              @if (leave.isApproved === false) {
+                <span class="badge bg-danger text-light">Rejected</span>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+   }
+   @else{
+<div class="card shadow-sm">
+  <div class="card-header fw-bold text-primary">
+    Pending Leave Requests
+  </div>
+  <div class="card-body p-0">
+    <table class="table table-striped table-hover mb-0">
+      <thead class="table-dark">
+        <tr>
+          <th>LEAVE ID</th>
+          <th>EMPLOYEE</th>
+          <th>LEAVE TYPE</th>
+          <th>FROM DATE</th>
+          <th>TO DATE</th>
+          <th>DAYS</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (leave of approvalleaveList; track $index) {
+          <tr>
+            <td>{{ leave.leaveId }}</td>
+            <td>{{ leave.employeeName }}</td>
+            <td>{{ leave.leaveType }}</td>
+            <td>{{ leave.fromDate | date:'yyyy-MM-dd' }}</td>
+            <td>{{ leave.toDate | date:'yyyy-MM-dd' }}</td>
+            <td>{{ leave.noOfDays }}</td>
+            <td class="text-center">
+              <span class="badge bg-success me-1" style="cursor:pointer;" (click)="acceptLeave(leave.leaveId)">
+                Approve
+              </span>
+              <span class="badge bg-danger" style="cursor:pointer;" (click)="rejectLeave(leave.leaveId)">
+                Reject
+              </span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+   
+  
+  }
+
+
+
+
 </div>
 
 
